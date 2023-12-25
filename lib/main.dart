@@ -1,6 +1,7 @@
 import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
 import 'package:faleh_hafez/presentation/home/menu_page.dart';
 import 'package:faleh_hafez/presentation/home/splash_page.dart';
+import 'package:faleh_hafez/presentation/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Future.delayed(
-        const Duration(seconds: 0),
+        const Duration(seconds: 3),
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         } else {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(primarySwatch: Colors.green),
+            theme: lightTheme,
             home: BlocProvider(
               create: (context) => OmenListBloc(),
               child: const MenuPage(),

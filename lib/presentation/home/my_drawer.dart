@@ -38,22 +38,22 @@ class MyDrawer extends StatelessWidget {
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Colors.green[900],
+                color: Theme.of(context).colorScheme.primary,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
                   'فال حافظ',
                   style: TextStyle(
                     fontFamily: 'iranNastaliq',
                     fontSize: 25,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ),
             ),
             Divider(
               thickness: 2,
-              color: Colors.green[900],
+              color: Theme.of(context).colorScheme.primary,
             ),
             MyButton(
               icon: const Icon(
@@ -71,8 +71,8 @@ class MyDrawer extends StatelessWidget {
               text: 'درباره ما',
               height: 60,
               width: double.infinity,
-              boxColor: Colors.green[900],
-              textColor: Colors.white,
+              boxColor: Theme.of(context).colorScheme.primary,
+              textColor: Theme.of(context).colorScheme.secondary,
             ),
             MyButton(
               icon: const Icon(
@@ -90,22 +90,22 @@ class MyDrawer extends StatelessWidget {
               text: 'تنظیمات',
               height: 60,
               width: double.infinity,
-              boxColor: Colors.green[900],
-              textColor: Colors.white,
+              boxColor: Theme.of(context).colorScheme.primary,
+              textColor: Theme.of(context).colorScheme.secondary,
             ),
             MyButton(
               onTap: () async {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    backgroundColor: Colors.green[300],
-                    content: const Column(
+                    backgroundColor: Theme.of(context).colorScheme.onBackground,
+                    content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           'به امید دیدار',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
                           ),
@@ -113,7 +113,7 @@ class MyDrawer extends StatelessWidget {
                         Text(
                           'فراموشمون نکنیا',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
@@ -139,7 +139,7 @@ class MyDrawer extends StatelessWidget {
               height: 60,
               width: double.infinity,
               boxColor: Colors.red,
-              textColor: Colors.white,
+              textColor: Theme.of(context).colorScheme.secondary,
               icon: const Icon(
                 Icons.logout,
                 color: Colors.black,
