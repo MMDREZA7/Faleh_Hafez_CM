@@ -1,6 +1,6 @@
 import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
-import 'package:faleh_hafez/presentation/home/my_button.dart';
-import 'package:faleh_hafez/presentation/home/my_drawer.dart';
+import 'package:faleh_hafez/presentation/home/components/button.dart';
+import 'package:faleh_hafez/presentation/home/components/my_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,17 +17,18 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       drawer: const MyDrawer(),
       appBar: AppBar(
-        iconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.secondary),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'فال حافظ',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
       ),
@@ -39,7 +40,7 @@ class _MenuPageState extends State<MenuPage> {
             builder: (context, state) {
               if (state is OmenListLoading) {
                 return CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 );
               }
               if (state is OmenListLoaded) {
@@ -52,15 +53,17 @@ class _MenuPageState extends State<MenuPage> {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          gradient: const LinearGradient(
-                            begin: Alignment(0, 0),
-                            end: Alignment(1, 1),
+                          gradient: LinearGradient(
+                            begin: const Alignment(-1, -1),
+                            end: const Alignment(1, 1),
                             colors: [
-                              Colors.green,
-                              Colors.yellow,
+                              Theme.of(context).colorScheme.primaryContainer,
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                             ],
                           ),
                         ),
+
+                        //* user's omen
                         child: Center(
                           child: ListView(
                             children: [
@@ -71,7 +74,7 @@ class _MenuPageState extends State<MenuPage> {
 
                               const SizedBox(height: 10),
 
-                              // omen text
+                              // First Contaner
                               Container(
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
@@ -79,45 +82,40 @@ class _MenuPageState extends State<MenuPage> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color:
-                                      Theme.of(context).colorScheme.secondary,
+                                      Theme.of(context).colorScheme.onPrimary,
                                   border: Border.all(
                                     color:
-                                        Theme.of(context).colorScheme.primary,
+                                        Theme.of(context).colorScheme.secondary,
+                                    width: 10,
                                   ),
                                 ),
+
+                                // Secend Container
                                 child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(25),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primaryContainer,
-                                  ),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(25),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    border: Border.all(
+                                      width: 10,
                                       color: Theme.of(context)
                                           .colorScheme
                                           .secondary,
-                                      border: Border.all(
-                                        color: Colors.green.shade900,
-                                      ),
                                     ),
-                                    child: Directionality(
-                                      textDirection: TextDirection.rtl,
-                                      child: Text(
-                                        state.omen.omenText,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: 'vazir',
-                                          fontWeight: FontWeight.bold,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary,
-                                        ),
+                                  ),
+                                  child: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Text(
+                                      state.omen.omenText,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontFamily: 'vazir',
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                       ),
                                     ),
                                   ),
@@ -139,8 +137,6 @@ class _MenuPageState extends State<MenuPage> {
                       text: 'گرفتن فال مجدد',
                       height: 80,
                       width: double.infinity,
-                      boxColor: Theme.of(context).colorScheme.primary,
-                      textColor: Colors.white,
                       icon: const Icon(Icons.get_app),
                     ),
                   ],
@@ -169,8 +165,6 @@ class _MenuPageState extends State<MenuPage> {
                     text: 'ابتدا نیت کنید و سپس کلیک کنید',
                     height: 80,
                     width: double.infinity,
-                    boxColor: Theme.of(context).colorScheme.primary,
-                    textColor: Colors.white,
                     icon: const Icon(
                       Icons.get_app,
                     ),

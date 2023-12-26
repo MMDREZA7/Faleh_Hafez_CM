@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
 import 'package:faleh_hafez/presentation/about/about_us.dart';
-import 'package:faleh_hafez/presentation/settings/settings_page.dart';
+import 'package:faleh_hafez/presentation/home/components/exit_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'my_button.dart';
+import 'button.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -17,6 +19,7 @@ class MyDrawer extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
+            // logo
             DrawerHeader(
               child: Center(
                 child: Container(
@@ -34,8 +37,9 @@ class MyDrawer extends StatelessWidget {
 
             // name of app
             Container(
+              padding: const EdgeInsets.only(top: 15),
               width: double.infinity,
-              height: 60,
+              height: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: Theme.of(context).colorScheme.primary,
@@ -44,9 +48,10 @@ class MyDrawer extends StatelessWidget {
                 child: Text(
                   'فال حافظ',
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     fontFamily: 'iranNastaliq',
-                    fontSize: 25,
-                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 45,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
               ),
@@ -55,6 +60,8 @@ class MyDrawer extends StatelessWidget {
               thickness: 2,
               color: Theme.of(context).colorScheme.primary,
             ),
+
+            // about us page
             MyButton(
               icon: const Icon(
                 Icons.info,
@@ -71,29 +78,24 @@ class MyDrawer extends StatelessWidget {
               text: 'درباره ما',
               height: 60,
               width: double.infinity,
-              boxColor: Theme.of(context).colorScheme.primary,
-              textColor: Theme.of(context).colorScheme.secondary,
             ),
+
+            // settings page
             MyButton(
               icon: const Icon(
                 Icons.settings,
                 color: Colors.black,
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsPage(),
-                  ),
-                );
+                context.read<ThemeChangerBloc>().add(ChangeThemeEvent());
               },
-              text: 'تنظیمات',
+              text: 'عوض کردن تم',
               height: 60,
               width: double.infinity,
-              boxColor: Theme.of(context).colorScheme.primary,
-              textColor: Theme.of(context).colorScheme.secondary,
             ),
-            MyButton(
+
+            // Exit button
+            ExitButton(
               onTap: () async {
                 showDialog(
                   context: context,
@@ -136,14 +138,6 @@ class MyDrawer extends StatelessWidget {
                 );
               },
               text: 'خروج',
-              height: 60,
-              width: double.infinity,
-              boxColor: Colors.red,
-              textColor: Theme.of(context).colorScheme.secondary,
-              icon: const Icon(
-                Icons.logout,
-                color: Colors.black,
-              ),
             ),
           ],
         ),
