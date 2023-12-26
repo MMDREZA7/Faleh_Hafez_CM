@@ -6,17 +6,17 @@ class AboutUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[700],
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.onSecondary,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
           'درباره ما',
           style: TextStyle(
             fontFamily: 'iranSans',
-            color: Theme.of(context).colorScheme.onSecondary,
+            color: Theme.of(context).colorScheme.onPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -29,12 +29,12 @@ class AboutUsPage extends StatelessWidget {
             Directionality(
               textDirection: TextDirection.rtl,
               child: Text(
-                'ما در این اپلیکیشن به نام "فال گیر خودکار" توانسته‌ایم یک تجربه جذاب و منحصربه‌فرد را برای کاربران خود فراهم کنیم. با این اپلیکیشن، کاربران می‌توانند به سادگی و به صورت خودکار از تعبیر فال‌های مختلفی از جمله فال تاروت، جادویی، روزانه و... بهره‌مند شوند.',
+                'ما در این اپلیکیشن به نام "فال حافظف" توانسته‌ایم یک تجربه جذاب و منحصربه‌فرد را برای کاربران خود فراهم کنیم. با این اپلیکیشن، کاربران می‌توانند به سادگی و به صورت خودکار از تعبیر فال‌های مختلفی از جمله فال تاروت، جادویی، روزانه و... بهره‌مند شوند.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context).colorScheme.onBackground,
                   fontFamily: 'vazir',
                 ),
               ),
@@ -48,15 +48,15 @@ class AboutUsPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context).colorScheme.onBackground,
                   fontFamily: 'vazir',
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
               child: Divider(
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
             Directionality(
@@ -65,7 +65,7 @@ class AboutUsPage extends StatelessWidget {
                 'ویژگی‌های اصلی این اپلیکیشن شامل :',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontSize: 18,
                   fontFamily: 'iranSans',
                 ),
@@ -77,9 +77,8 @@ class AboutUsPage extends StatelessWidget {
               child: Text(
                 '1)  تنوع در فال‌ها: ارائه انواع مختلف فال‌ها از جمله تاروت، جادویی، روزانه، عشق و روابط، شانس و... برای پاسخ به نیازهای مختلف کاربران.\n\n2) خودکارسازی: این اپلیکیشن با بهره‌گیری از الگوریتم‌های پیشرفته، به صورت خودکار فال‌ها را برای کاربران ارائه می‌دهد، بدون نیاز به تداخل انسانی. \n\n3) دقت و تخصص: تفسیرات ارائه شده توسط این اپلیکیشن، بر اساس دانش و تخصص کارشناسان متخصص صورت می‌گیرد تا بهترین تجربه ممکن برای کاربران فراهم شود. \n\n4) رابط کاربری کارآمد: رابط کاربری ساده و دوستانه که امکان دسترسی آسان و سریع به فال‌ها را برای همه ارائه می‌دهد.',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
                   fontSize: 20,
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontFamily: 'lalezar',
                 ),
               ),

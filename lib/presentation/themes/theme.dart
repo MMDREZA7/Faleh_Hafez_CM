@@ -7,12 +7,12 @@ ThemeData lightTheme = ThemeData(
     onPrimary: Colors.green.shade900,
     background: Colors.green.shade300,
     onBackground: Colors.green.shade900,
-    secondary: Colors.green.shade300,
-    onSecondary: Colors.green.shade900,
+    secondary: Colors.green.shade800,
+    onSecondary: Colors.green.shade400,
 
     // for gradiant
-    primaryContainer: Colors.green,
-    onPrimaryContainer: Colors.yellow,
+    primaryContainer: Colors.green.shade300,
+    onPrimaryContainer: Colors.yellow.shade500,
   ),
 );
 
@@ -22,12 +22,12 @@ ThemeData darkTheme = ThemeData(
     primary: Colors.green.shade900,
     onPrimary: Colors.green.shade300,
     background: Colors.green.shade800,
-    onBackground: Colors.green.shade500,
-    secondary: Colors.green.shade800,
-    onSecondary: Colors.green.shade300,
+    onBackground: Colors.green.shade400,
+    secondary: Colors.green.shade300,
+    onSecondary: Colors.green.shade800,
 
     // for gradiant
-    primaryContainer: Colors.green,
-    onPrimaryContainer: Colors.green,
+    primaryContainer: Colors.green.shade700,
+    onPrimaryContainer: Colors.yellow.shade600,
   ),
 );

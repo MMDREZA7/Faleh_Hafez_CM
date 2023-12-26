@@ -82,10 +82,11 @@ class _MenuPageState extends State<MenuPage> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color:
-                                      Theme.of(context).colorScheme.onPrimary,
+                                      Theme.of(context).colorScheme.secondary,
                                   border: Border.all(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
                                     width: 10,
                                   ),
                                 ),
@@ -96,12 +97,12 @@ class _MenuPageState extends State<MenuPage> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     color:
-                                        Theme.of(context).colorScheme.onPrimary,
+                                        Theme.of(context).colorScheme.secondary,
                                     border: Border.all(
                                       width: 10,
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .secondary,
+                                          .onSecondary,
                                     ),
                                   ),
                                   child: Directionality(
@@ -115,7 +116,7 @@ class _MenuPageState extends State<MenuPage> {
                                         fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .secondary,
+                                            .onSecondary,
                                       ),
                                     ),
                                   ),
@@ -134,7 +135,7 @@ class _MenuPageState extends State<MenuPage> {
                             .read<OmenListBloc>()
                             .add(OmenListShowOmenEvent());
                       },
-                      text: 'گرفتن فال مجدد',
+                      text: 'مجددا ابتدا نیت',
                       height: 80,
                       width: double.infinity,
                       icon: const Icon(Icons.get_app),
