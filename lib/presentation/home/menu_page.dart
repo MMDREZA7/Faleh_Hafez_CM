@@ -24,31 +24,24 @@ class _MenuPageState extends State<MenuPage> {
               showDialog(
                 context: context,
                 builder: (context) => const QuickGuideDialog(
-                    text:
-                        'برای استفاده از برنامه شما باید دکمه ی پایینی را فشار دهید و سپس منتظر بمانید تا فال شما نمایان شود'),
-              );
-
-              Future.delayed(
-                const Duration(seconds: 3),
-              );
-
-              showDialog(
-                context: context,
-                builder: (context) => const QuickGuideDialog(
                   text:
-                      'همچنین شما میتوانید در منوی سمت چب صفحه درباره اپلیکشین فال حافظ بیشتر بدانید',
+                      'برای عوض کردن تِم برنامه ، میتوانید به منوی سمت چپ صفحه مراجعه کنید و سپس دکمه "عوض کردن تِم"را کلیک کنید',
                 ),
               );
 
-              Future.delayed(
-                const Duration(seconds: 3),
+              showDialog(
+                context: context,
+                builder: (context) => const QuickGuideDialog(
+                  text:
+                      "همچنین شما میتوانید در منوی سمت چب صفحه درباره اپلیکشین (فال حافظ) بیشتر بدانید",
+                ),
               );
 
               showDialog(
                 context: context,
                 builder: (context) => const QuickGuideDialog(
                   text:
-                      'برای عوض کردن تم ، میتوانید به منوی سمت چپ صفحه مراجعه کیده و سپس دکمه تم برنامه را عوض کنید',
+                      'برای استفاده از برنامه، شما باید دکمه ی پایین صفحه را فشار دهید و سپس منتظر بمانید تا فال شما نمایان شود',
                 ),
               );
             },
@@ -106,64 +99,71 @@ class _MenuPageState extends State<MenuPage> {
 
                         //* user's omen
                         child: Center(
-                          child: ListView(
-                            children: [
-                              // faleh hafez image
-                              Image.asset(
-                                'assets/images/Faleh_Hafez (2).jpg',
-                              ),
-
-                              const SizedBox(height: 10),
-
-                              // First Contaner
-                              Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                padding: const EdgeInsets.all(25),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                  border: Border.all(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary,
-                                    width: 10,
-                                  ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 35,
+                              horizontal: 10,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // faleh hafez image
+                                Image.asset(
+                                  'assets/images/Faleh_Hafez (2).jpg',
+                                  cacheHeight: 200,
                                 ),
 
-                                // Secend Container
-                                child: Container(
-                                  padding: const EdgeInsets.all(25),
+                                // First Contaner
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  padding: const EdgeInsets.all(15),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(12),
                                     color:
                                         Theme.of(context).colorScheme.secondary,
                                     border: Border.all(
-                                      width: 10,
                                       color: Theme.of(context)
                                           .colorScheme
                                           .onSecondary,
+                                      width: 10,
                                     ),
                                   ),
-                                  child: Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Text(
-                                      state.omen.omenText,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: 'vazir',
-                                        fontWeight: FontWeight.bold,
+
+                                  // Secend Container
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      border: Border.all(
+                                        width: 10,
                                         color: Theme.of(context)
                                             .colorScheme
                                             .onSecondary,
                                       ),
                                     ),
+                                    child: Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: Text(
+                                        state.omen.omenText,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontFamily: 'vazir',
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -176,10 +176,13 @@ class _MenuPageState extends State<MenuPage> {
                             .read<OmenListBloc>()
                             .add(OmenListShowOmenEvent());
                       },
-                      text: 'مجددا ابتدا نیت کنید و سپس کلیک کنید',
+                      text: 'برای دریافت فال دیگر کلیک کنید',
                       height: 80,
                       width: double.infinity,
-                      icon: const Icon(Icons.get_app),
+                      icon: Icon(
+                        Icons.get_app,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ],
                 );

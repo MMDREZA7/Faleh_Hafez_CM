@@ -63,9 +63,9 @@ class MyDrawer extends StatelessWidget {
 
             // about us page
             MyButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.info,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
               onTap: () {
                 Navigator.push(
@@ -82,9 +82,9 @@ class MyDrawer extends StatelessWidget {
 
             // settings page
             MyButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.settings,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
               onTap: () {
                 context.read<ThemeChangerBloc>().add(ChangeThemeEvent());

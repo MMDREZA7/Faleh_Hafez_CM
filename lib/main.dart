@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
                   );
                 } else {
                   return const MaterialApp(
+                    debugShowCheckedModeBanner: false,
                     home: SplashPage(),
                   );
                 }

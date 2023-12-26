@@ -36,7 +36,7 @@ class QuickGuideDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(5),
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Text(
