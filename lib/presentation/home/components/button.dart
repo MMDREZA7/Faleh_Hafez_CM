@@ -32,7 +32,7 @@ class MyButton extends StatelessWidget {
           child: ListTile(
             titleAlignment: ListTileTitleAlignment.center,
             trailing: icon,
-            iconColor: Theme.of(context).colorScheme.onPrimary,
+            iconColor: Colors.white,
             title: Directionality(
               textDirection: TextDirection.rtl,
               child: Text(

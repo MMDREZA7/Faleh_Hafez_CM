@@ -34,7 +34,7 @@ class AboutUsPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontFamily: 'vazir',
                 ),
               ),
@@ -48,7 +48,7 @@ class AboutUsPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontFamily: 'vazir',
                 ),
               ),

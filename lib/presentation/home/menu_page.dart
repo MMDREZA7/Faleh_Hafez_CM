@@ -1,4 +1,5 @@
 import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
+import 'package:faleh_hafez/presentation/home/components/Quick_guide_dialog.dart';
 import 'package:faleh_hafez/presentation/home/components/button.dart';
 import 'package:faleh_hafez/presentation/home/components/my_drawer.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,46 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       drawer: const MyDrawer(),
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => const QuickGuideDialog(
+                    text:
+                        'برای استفاده از برنامه شما باید دکمه ی پایینی را فشار دهید و سپس منتظر بمانید تا فال شما نمایان شود'),
+              );
+
+              Future.delayed(
+                const Duration(seconds: 3),
+              );
+
+              showDialog(
+                context: context,
+                builder: (context) => const QuickGuideDialog(
+                  text:
+                      'همچنین شما میتوانید در منوی سمت چب صفحه درباره اپلیکشین فال حافظ بیشتر بدانید',
+                ),
+              );
+
+              Future.delayed(
+                const Duration(seconds: 3),
+              );
+
+              showDialog(
+                context: context,
+                builder: (context) => const QuickGuideDialog(
+                  text:
+                      'برای عوض کردن تم ، میتوانید به منوی سمت چپ صفحه مراجعه کیده و سپس دکمه تم برنامه را عوض کنید',
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.help,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+        ],
         iconTheme: IconThemeData(
           color: Theme.of(context).colorScheme.onPrimary,
         ),
@@ -135,7 +176,7 @@ class _MenuPageState extends State<MenuPage> {
                             .read<OmenListBloc>()
                             .add(OmenListShowOmenEvent());
                       },
-                      text: 'مجددا ابتدا نیت',
+                      text: 'مجددا ابتدا نیت کنید و سپس کلیک کنید',
                       height: 80,
                       width: double.infinity,
                       icon: const Icon(Icons.get_app),
@@ -166,8 +207,9 @@ class _MenuPageState extends State<MenuPage> {
                     text: 'ابتدا نیت کنید و سپس کلیک کنید',
                     height: 80,
                     width: double.infinity,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.get_app,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                 ],
