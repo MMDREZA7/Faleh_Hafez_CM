@@ -1,4 +1,5 @@
 import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
+import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
 import 'package:faleh_hafez/presentation/home/components/Quick_guide_dialog.dart';
 import 'package:faleh_hafez/presentation/home/components/button.dart';
 import 'package:faleh_hafez/presentation/home/components/my_drawer.dart';
@@ -14,14 +15,20 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   @override
+  void initState() {
+    context.read<ThemeChangerBloc>().add(FirstTimeToOpenApp());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const MyDrawer(),
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {
-              showDialog(
+            onPressed: () async {
+              await showDialog(
                 context: context,
                 builder: (context) => const QuickGuideDialog(
                   text:
@@ -29,7 +36,8 @@ class _MenuPageState extends State<MenuPage> {
                 ),
               );
 
-              showDialog(
+              // ignore: use_build_context_synchronously
+              await showDialog(
                 context: context,
                 builder: (context) => const QuickGuideDialog(
                   text:
@@ -37,7 +45,8 @@ class _MenuPageState extends State<MenuPage> {
                 ),
               );
 
-              showDialog(
+              // ignore: use_build_context_synchronously
+              await showDialog(
                 context: context,
                 builder: (context) => const QuickGuideDialog(
                   text:
@@ -110,7 +119,7 @@ class _MenuPageState extends State<MenuPage> {
                                 // faleh hafez image
                                 Image.asset(
                                   'assets/images/Faleh_Hafez (2).jpg',
-                                  cacheHeight: 200,
+                                  cacheHeight: 180,
                                 ),
 
                                 // First Contaner
@@ -145,6 +154,8 @@ class _MenuPageState extends State<MenuPage> {
                                             .onSecondary,
                                       ),
                                     ),
+
+                                    // omen text
                                     child: Directionality(
                                       textDirection: TextDirection.rtl,
                                       child: Text(

@@ -4,8 +4,15 @@ import 'package:faleh_hafez/presentation/home/menu_page.dart';
 import 'package:faleh_hafez/presentation/home/components/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+void main() async {
+  // initialize hive
+  await Hive.initFlutter();
+
+  // open box
+  var box = await Hive.openBox('myBox');
+
   runApp(const MyApp());
 }
 
@@ -37,7 +44,7 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider(
                 create: (context) =>
-                    ThemeChangerBloc()..add(ChangeThemeEvent()),
+                    ThemeChangerBloc()..add(FirstTimeToOpenApp()),
               ),
               BlocProvider(
                 create: (context) => OmenListBloc(),
