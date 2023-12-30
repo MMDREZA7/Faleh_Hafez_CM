@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -25,8 +26,9 @@ class SplashPage extends StatelessWidget {
                 Image.asset(
                   'assets/icon/letter-f.png',
                   color: Theme.of(context).colorScheme.onPrimary,
+                  cacheHeight: 500,
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 45),
                 Text(
                   'فال حافظ',
                   style: TextStyle(
@@ -34,6 +36,14 @@ class SplashPage extends StatelessWidget {
                     fontSize: 40,
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
+                ),
+
+                const SizedBox(height: 25),
+
+                // loading
+                SpinKitThreeBounce(
+                  size: 30,
+                  color: Theme.of(context).colorScheme.onBackground,
                 ),
               ],
             ),
