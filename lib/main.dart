@@ -1,7 +1,8 @@
 import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
 import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
-import 'package:faleh_hafez/presentation/home/menu_page.dart';
+import 'package:faleh_hafez/presentation/home/home_page.dart';
 import 'package:faleh_hafez/presentation/home/components/splash_page.dart';
+import 'package:faleh_hafez/presentation/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -31,9 +32,10 @@ class MyApp extends StatelessWidget {
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const MaterialApp(
+          return MaterialApp(
+            theme: darkTheme,
             debugShowCheckedModeBanner: false,
-            home: SplashPage(),
+            home: const SplashPage(),
           );
         } else {
           //
@@ -56,12 +58,13 @@ class MyApp extends StatelessWidget {
                   return MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: state.theme,
-                    home: const MenuPage(),
+                    home: const HomePage(),
                   );
                 } else {
-                  return const MaterialApp(
+                  return MaterialApp(
                     debugShowCheckedModeBanner: false,
-                    home: SplashPage(),
+                    theme: darkTheme,
+                    home: const SplashPage(),
                   );
                 }
               },

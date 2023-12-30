@@ -6,14 +6,15 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.green[600],
+        backgroundColor: Theme.of(context).colorScheme.primary,
         body: Center(
           child: Container(
+            padding: const EdgeInsets.all(25),
             margin: const EdgeInsets.all(25),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: Colors.green.shade900,
+                color: Theme.of(context).colorScheme.onPrimary,
                 width: 5,
               ),
             ),
@@ -23,7 +24,7 @@ class SplashPage extends StatelessWidget {
               children: [
                 Image.asset(
                   'assets/icon/letter-f.png',
-                  color: Colors.green.shade900,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 const SizedBox(height: 50),
                 Text(
@@ -31,7 +32,7 @@ class SplashPage extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 40,
-                    color: Colors.green.shade900,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
               ],

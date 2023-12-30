@@ -5,8 +5,6 @@ sealed class ThemeChangerState {}
 
 class ThemeChangerInitial extends ThemeChangerState {}
 
-class ThemeChangerLoading extends ThemeChangerState {}
-
 class ThemeChangerLoaded extends ThemeChangerState {
   final ThemeData theme;
 

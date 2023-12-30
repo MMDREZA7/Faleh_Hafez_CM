@@ -7,8 +7,8 @@ ThemeData lightTheme = ThemeData(
     onPrimary: Colors.green.shade900,
     background: Colors.green.shade300,
     onBackground: Colors.green.shade900,
-    secondary: Colors.green.shade800,
-    onSecondary: Colors.green.shade400,
+    secondary: Colors.green.shade900,
+    onSecondary: Colors.green.shade500,
 
     // for gradiant
     primaryContainer: Colors.green.shade300,
@@ -23,8 +23,8 @@ ThemeData darkTheme = ThemeData(
     onPrimary: Colors.green.shade300,
     background: Colors.green.shade800,
     onBackground: Colors.green.shade400,
-    secondary: Colors.green.shade300,
-    onSecondary: Colors.green.shade800,
+    secondary: Colors.green.shade400,
+    onSecondary: Colors.green.shade900,
 
     // for gradiant
     primaryContainer: Colors.green.shade700,

@@ -29,12 +29,12 @@ class AboutUsPage extends StatelessWidget {
             Directionality(
               textDirection: TextDirection.rtl,
               child: Text(
-                'ما در این اپلیکیشن به نام "فال حافظف" توانسته‌ایم یک تجربه جذاب و منحصربه‌فرد را برای کاربران خود فراهم کنیم. با این اپلیکیشن، کاربران می‌توانند به سادگی و به صورت خودکار از تعبیر فال‌های مختلفی از جمله فال تاروت، جادویی، روزانه و... بهره‌مند شوند.',
+                'ما در این اپلیکیشن به نام "فال حافظ" توانسته‌ایم یک تجربه جذاب و منحصربه‌فرد را برای کاربران خود فراهم کنیم. با این اپلیکیشن، کاربران می‌توانند به سادگی و به صورت خودکار از تعبیر فال‌های مختلفی از جمله فال تاروت، جادویی، روزانه و... بهره‌مند شوند.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontFamily: 'vazir',
                 ),
               ),
@@ -48,7 +48,7 @@ class AboutUsPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontFamily: 'vazir',
                 ),
               ),
@@ -56,7 +56,7 @@ class AboutUsPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15),
               child: Divider(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.onBackground,
               ),
             ),
             Directionality(
