@@ -11,9 +11,9 @@ ThemeData mainTheme = lightTheme;
 
 class ThemeChangerBloc extends Bloc<ThemeChangerEvent, ThemeChangerState> {
   final _myBox = Hive.box('mybox');
-  get myBox => _myBox;
   ThemeChangerBloc() : super(ThemeChangerInitial()) {
     on<FirstTimeToOpenApp>((event, emit) async {
+      emit(ThemeChangerLoading());
       if (_myBox.isEmpty) {
         mainTheme = lightTheme;
         _myBox.put('theme', 'lightTheme');
@@ -32,6 +32,8 @@ class ThemeChangerBloc extends Bloc<ThemeChangerEvent, ThemeChangerState> {
     // -----
 
     on<ChangeThemeEvent>((event, emit) async {
+      emit(ThemeChangerLoading());
+
       var val = _myBox.get('theme');
 
       if (val == 'lightTheme') {

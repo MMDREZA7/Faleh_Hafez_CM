@@ -28,13 +28,13 @@ class MyApp extends StatelessWidget {
       //! load splash page
 
       future: Future.delayed(
-        const Duration(seconds: 3),
+        const Duration(seconds: 0),
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return MaterialApp(
-            theme: darkTheme,
             debugShowCheckedModeBanner: false,
+            theme: darkTheme,
             home: const SplashPage(),
           );
         } else {

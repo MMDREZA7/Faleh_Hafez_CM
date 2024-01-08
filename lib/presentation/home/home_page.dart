@@ -74,132 +74,130 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Center(
-          child: BlocBuilder<OmenListBloc, OmenListState>(
-            builder: (context, state) {
-              if (state is OmenListLoading) {
-                return CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                );
-              }
-              if (state is OmenListLoaded) {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.all(10),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/Tomb_of_hafez.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: BlocBuilder<OmenListBloc, OmenListState>(
+              builder: (context, state) {
+                if (state is OmenListLoading) {
+                  return CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  );
+                }
+                if (state is OmenListLoaded) {
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(10),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
 
-                        //* user's omen
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ListView(
-                              children: [
-                                // poem text
-                                Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Text(
-                                    state.omen.poemText,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'vazir',
-                                      fontWeight: FontWeight.bold,
+                          //* user's omen
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: ListView(
+                                children: [
+                                  // poem text
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Text(
+                                      state.omen.poemText,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'vazir',
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+
+                                  // divider
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 10),
+                                    child: Divider(
+                                      thickness: 2,
                                       color: Theme.of(context)
                                           .colorScheme
                                           .onPrimary,
                                     ),
-                                    textAlign: TextAlign.center,
                                   ),
-                                ),
 
-                                // divider
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  child: Divider(
-                                    height: 10,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                  ),
-                                ),
-
-                                // tafsir text
-                                Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Text(
-                                    'تفسیر :',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'vazir',
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
+                                  // tafsir text
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Text(
+                                      'تفسیر :',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'vazir',
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      ),
                                     ),
                                   ),
-                                ),
 
-                                Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Text(
-                                    state.omen.omenText,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: 'vazir',
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Text(
+                                      state.omen.omenText,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: 'vazir',
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
 
-                    // give user's omen button for second time
-                    MyButton(
-                      onTap: () {
-                        context
-                            .read<OmenListBloc>()
-                            .add(OmenListShowOmenEvent());
-                      },
-                      text: 'ابتدا نیت کنید و سپس کلیک کنید',
-                      height: 80,
-                      width: double.infinity,
-                      icon: Icon(
-                        Icons.get_app,
-                        color: Theme.of(context).colorScheme.onPrimary,
+                      // give user's omen button for second time
+                      MyButton(
+                        onTap: () {
+                          context
+                              .read<OmenListBloc>()
+                              .add(OmenListShowOmenEvent());
+                        },
+                        text: 'ابتدا نیت کنید و سپس کلیک کنید',
+                        height: 80,
+                        width: double.infinity,
+                        icon: Icon(
+                          Icons.get_app,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ],
+                  );
+                }
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // logo
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 80),
-                      child: Image.asset(
-                        'assets/icon/letter-f.png',
-                        color: Theme.of(context).colorScheme.onBackground,
-                        cacheHeight: 450,
-                      ),
-                    ),
-
                     // give user's omen button for first time
                     MyButton(
                       onTap: () {
@@ -216,9 +214,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ],
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

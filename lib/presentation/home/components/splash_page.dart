@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -7,15 +6,14 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Colors.green[600],
         body: Center(
           child: Container(
-            padding: const EdgeInsets.all(25),
             margin: const EdgeInsets.all(25),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: Colors.green.shade900,
                 width: 5,
               ),
             ),
@@ -25,25 +23,16 @@ class SplashPage extends StatelessWidget {
               children: [
                 Image.asset(
                   'assets/icon/letter-f.png',
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  cacheHeight: 500,
+                  color: Colors.green.shade900,
                 ),
-                const SizedBox(height: 45),
+                const SizedBox(height: 50),
                 Text(
                   'فال حافظ',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 40,
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Colors.green.shade900,
                   ),
-                ),
-
-                const SizedBox(height: 25),
-
-                // loading
-                SpinKitThreeBounce(
-                  size: 30,
-                  color: Theme.of(context).colorScheme.onBackground,
                 ),
               ],
             ),

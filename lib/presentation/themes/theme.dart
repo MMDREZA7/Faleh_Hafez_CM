@@ -9,10 +9,6 @@ ThemeData lightTheme = ThemeData(
     onBackground: Colors.green.shade900,
     secondary: Colors.green.shade900,
     onSecondary: Colors.green.shade500,
-
-    // for gradiant
-    primaryContainer: Colors.green.shade300,
-    onPrimaryContainer: Colors.yellow.shade500,
   ),
 );
 
@@ -25,9 +21,18 @@ ThemeData darkTheme = ThemeData(
     onBackground: Colors.green.shade400,
     secondary: Colors.green.shade400,
     onSecondary: Colors.green.shade900,
+    primaryContainer: Colors.black54,
+  ),
+);
 
-    // for gradiant
-    primaryContainer: Colors.green.shade700,
-    onPrimaryContainer: Colors.yellow.shade600,
+ThemeData secretPageTheme = ThemeData(
+  brightness: Brightness.dark,
+  colorScheme: ColorScheme.dark(
+    background: Colors.grey.shade900,
+    onBackground: Colors.grey.shade700,
+    primary: Colors.grey.shade800,
+    onPrimary: Colors.grey.shade300,
+    secondary: Colors.grey.shade600,
+    onSecondary: Colors.grey.shade400,
   ),
 );

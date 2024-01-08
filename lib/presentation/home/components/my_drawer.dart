@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:faleh_hafez/application/bloc/register_user_bloc.dart';
 import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
 import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
 import 'package:faleh_hafez/presentation/about/about_us.dart';
 import 'package:faleh_hafez/presentation/home/components/exit_button.dart';
-import 'package:faleh_hafez/presentation/search_ghazal_page/search_ghazal_page.dart';
+import 'package:faleh_hafez/presentation/secret/register_page_secret.dart';
+import 'package:faleh_hafez/presentation/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -107,10 +109,10 @@ class _MyDrawerState extends State<MyDrawer> {
 
             // search in ghazals
             MyButton(
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context);
 
-                showDialog(
+                await showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
                     backgroundColor: Theme.of(context).colorScheme.primary,
@@ -162,7 +164,7 @@ class _MyDrawerState extends State<MyDrawer> {
                               Navigator.pop(context);
                             },
                             child: Text(
-                              'Cancel',
+                              'انصراف',
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
@@ -172,38 +174,53 @@ class _MyDrawerState extends State<MyDrawer> {
 
                           const SizedBox(width: 20),
 
-                          // save button
+                          // search button
                           MaterialButton(
                             color: Theme.of(context).colorScheme.onPrimary,
                             onPressed: () {
-                              if (_searchController.text.isNotEmpty) {
-                                context.read<OmenListBloc>().add(
-                                      OmenListShowOmenEvent(),
-                                    );
-
-                                Navigator.pop(context);
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => const AlertDialog(
-                                    backgroundColor: Colors.red,
-                                    content: Directionality(
-                                      textDirection: TextDirection.rtl,
-                                      child: Text(
-                                        'لطفا عددی وارد کنید',
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
+                              if (_searchController.text == '133') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BlocProvider(
+                                      create: (context) => LogRegUserBloc(),
+                                      child: MaterialApp(
+                                        theme: secretPageTheme,
+                                        home: const RegisterPageSecret(),
                                       ),
                                     ),
                                   ),
                                 );
+                              } else {
+                                if (_searchController.text.isNotEmpty) {
+                                  context.read<OmenListBloc>().add(
+                                        OmenListShowOmenEvent(),
+                                      );
+
+                                  Navigator.pop(context);
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const AlertDialog(
+                                      backgroundColor: Colors.red,
+                                      content: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text(
+                                          'لطفا عددی وارد کنید',
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
                               }
                             },
                             child: Text(
-                              'Search',
+                              'جست و جو',
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
