@@ -1,0 +1,54 @@
+import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:meta/meta.dart';
+
+import '../../presentation/themes/theme.dart';
+
+part 'chat_theme_changer_event.dart';
+part 'chat_theme_changer_state.dart';
+
+ThemeData mainTheme = lightChatTheme;
+
+class ChatThemeChangerBloc
+    extends Bloc<ChatThemeChangerEvent, ChatThemeChangerState> {
+  final _myBox = Hive.box('mybox');
+  ChatThemeChangerBloc() : super(ChatThemeChangerInitial()) {
+    on<ChangeChatPageTheme>((event, emit) async {
+      emit(ChatThemeChangerLoading());
+      if (_myBox.isEmpty) {
+        mainTheme = lightChatTheme;
+        _myBox.put('chatTheme', 'chatLightTheme');
+      } else {
+        var val = _myBox.get('chatTheme');
+        if (val == 'chatLightTheme') {
+          mainTheme = darkChatTheme;
+        } else {
+          mainTheme = lightChatTheme;
+        }
+      }
+
+      emit(
+        ChatThemeChangerLoaded(theme: mainTheme),
+      );
+    });
+
+    // -----
+
+    on<FirstTimeOpenChat>((event, emit) async {
+      emit(ChatThemeChangerLoading());
+
+      var val = _myBox.get('chatTheme');
+
+      if (val == 'chatDarkTheme') {
+        mainTheme = darkChatTheme;
+        _myBox.put('chatTheme', 'darkTheme');
+      } else {
+        mainTheme = lightChatTheme;
+        _myBox.put('chatTheme', 'chatLightTheme');
+      }
+
+      emit(ChatThemeChangerLoaded(theme: mainTheme));
+    });
+  }
+}

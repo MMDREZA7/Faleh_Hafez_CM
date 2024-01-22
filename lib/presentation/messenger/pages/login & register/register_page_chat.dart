@@ -1,21 +1,26 @@
-import 'package:faleh_hafez/application/bloc/register_user_bloc.dart';
-import 'package:faleh_hafez/domain/user.dart';
-import 'package:faleh_hafez/presentation/secret/home_page_secret.dart';
-import 'package:faleh_hafez/presentation/secret/login_page_secret.dart';
+import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/login_page_chat.dart';
+import 'package:faleh_hafez/presentation/messenger/pages/messenger_pages/home_page_chats.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterPageSecret extends StatefulWidget {
-  const RegisterPageSecret({super.key});
+import '../../../../application/chat_theme_changer/chat_theme_changer_bloc.dart';
+import '../../../../application/register_login/register_user_bloc.dart';
+
+class RegisterPageMessenger extends StatefulWidget {
+  const RegisterPageMessenger({super.key});
 
   @override
-  State<RegisterPageSecret> createState() => _RegisterPageSecretState();
+  State<RegisterPageMessenger> createState() => _RegisterPageMessengerState();
 }
 
-class _RegisterPageSecretState extends State<RegisterPageSecret> {
+class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
+
+  FocusNode _userNameFocusNode = FocusNode();
+  FocusNode _passwordFocusNode = FocusNode();
+  FocusNode _confirmPasswordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +68,13 @@ class _RegisterPageSecretState extends State<RegisterPageSecret> {
                           title: Directionality(
                             textDirection: TextDirection.rtl,
                             child: TextFormField(
+                              focusNode: _userNameFocusNode,
                               controller: _userNameController,
+                              cursorColor: Colors.white,
+                              onFieldSubmitted: (value) {
+                                FocusScope.of(context)
+                                    .requestFocus(_passwordFocusNode);
+                              },
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold,
@@ -103,7 +114,13 @@ class _RegisterPageSecretState extends State<RegisterPageSecret> {
                           title: Directionality(
                             textDirection: TextDirection.rtl,
                             child: TextFormField(
+                              cursorColor: Colors.white,
+                              onFieldSubmitted: (value) {
+                                FocusScope.of(context)
+                                    .requestFocus(_confirmPasswordFocusNode);
+                              },
                               keyboardType: TextInputType.number,
+                              focusNode: _passwordFocusNode,
                               controller: _passwordController,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
@@ -144,7 +161,11 @@ class _RegisterPageSecretState extends State<RegisterPageSecret> {
                           title: Directionality(
                             textDirection: TextDirection.rtl,
                             child: TextFormField(
+                              cursorColor: Colors.white,
+                              showCursor: true,
+                              focusNode: _confirmPasswordFocusNode,
                               controller: _confirmPasswordController,
+                              keyboardType: TextInputType.number,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold,
@@ -180,66 +201,25 @@ class _RegisterPageSecretState extends State<RegisterPageSecret> {
                       ),
                       color: Theme.of(context).colorScheme.secondary,
                       onPressed: () async {
-                        context.read<LogRegUserBloc>().add(
-                              LoginUser(
-                                user: User(password: '', userName: ''),
-                              ),
-                            );
-                        if (_passwordController.text.length < 6) {
-                          await showDialog(
-                            context: context,
-                            builder: (context) => const AlertDialog(
-                              content: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: Text(
-                                  'پسورد باید از 6 رقم بیشتر باشد لطفا آن را اصلاح کنید',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocBuilder<
+                                ChatThemeChangerBloc, ChatThemeChangerState>(
+                              builder: (context, state) {
+                                if (state is ChatThemeChangerLoaded) {
+                                  return MaterialApp(
+                                    theme: state.theme,
+                                    home: HomePageChats(
+                                      nameOfUser: _userNameController.text,
+                                    ),
+                                  );
+                                }
+                                return const HomePageChats(nameOfUser: 'hi');
+                              },
                             ),
-                          );
-                        } else {
-                          if (_confirmPasswordController.text !=
-                              _passwordController.text) {
-                            await showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                backgroundColor: Colors.red[300],
-                                content: const Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Text(
-                                    'تایید پسورد با پسورد یکسان نیست لطفا آن را چک کنید',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          } else {
-                            context.read<LogRegUserBloc>().add(
-                                  RegisterUser(
-                                    user: User(
-                                      password: _passwordController.text,
-                                      userName: _userNameController.text,
-                                    ),
-                                  ),
-                                );
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePageSecret(
-                                  password: _passwordController.text,
-                                  title: _userNameController.text,
-                                ),
-                              ),
-                            );
-                          }
-                        }
+                          ),
+                        );
                       },
                       child: Text(
                         'ثبت نام',

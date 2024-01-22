@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:bloc/bloc.dart';
 import 'package:faleh_hafez/domain/user.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -13,6 +11,7 @@ List<User> userList = [];
 late final String? errorText;
 
 class LogRegUserBloc extends Bloc<LogRegUserEvent, LogRegUserState> {
+  // ignore: unused_field
   final _myBox = Hive.box('mybox');
   LogRegUserBloc() : super(LogRegUserInitial()) {
     on<RegisterUser>((event, emit) async {
@@ -36,6 +35,7 @@ class LogRegUserBloc extends Bloc<LogRegUserEvent, LogRegUserState> {
         },
       );
 
+      // ignore: unnecessary_null_comparison
       if (findUser != null) {
         emit(
           LogRegUserError(errorText: 'این نام کاربری وجود دارد'),
@@ -49,7 +49,11 @@ class LogRegUserBloc extends Bloc<LogRegUserEvent, LogRegUserState> {
         (element) => element.userName == event.user.userName,
         orElse: () {
           print('user not found');
-          return userList.first;
+
+          return User(
+            password: event.user.password,
+            userName: event.user.userName,
+          );
         },
       );
 

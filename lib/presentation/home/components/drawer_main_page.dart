@@ -1,14 +1,15 @@
 import 'dart:io';
-import 'package:faleh_hafez/application/bloc/register_user_bloc.dart';
+import 'package:faleh_hafez/application/chat_theme_changer/chat_theme_changer_bloc.dart';
 import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
 import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
 import 'package:faleh_hafez/presentation/about/about_us.dart';
 import 'package:faleh_hafez/presentation/home/components/exit_button.dart';
-import 'package:faleh_hafez/presentation/secret/register_page_secret.dart';
 import 'package:faleh_hafez/presentation/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../application/register_login/register_user_bloc.dart';
+import '../../messenger/pages/login & register/register_page_chat.dart';
 import 'button.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -20,6 +21,8 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   final TextEditingController _searchController = TextEditingController();
+
+  FocusNode _searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +140,9 @@ class _MyDrawerState extends State<MyDrawer> {
                       ),
                       child: Directionality(
                         textDirection: TextDirection.rtl,
-                        child: TextField(
+                        child: TextFormField(
+                          autofocus: true,
+                          focusNode: _searchFocusNode,
                           controller: _searchController,
                           keyboardType: TextInputType.number,
                           maxLength: 3,
@@ -186,7 +191,11 @@ class _MyDrawerState extends State<MyDrawer> {
                                       create: (context) => LogRegUserBloc(),
                                       child: MaterialApp(
                                         theme: secretPageTheme,
-                                        home: const RegisterPageSecret(),
+                                        home: BlocProvider(
+                                          create: (context) =>
+                                              ChatThemeChangerBloc(),
+                                          child: const RegisterPageMessenger(),
+                                        ),
                                       ),
                                     ),
                                   ),

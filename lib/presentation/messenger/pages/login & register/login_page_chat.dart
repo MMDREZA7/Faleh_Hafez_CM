@@ -1,10 +1,11 @@
-import 'package:faleh_hafez/application/bloc/register_user_bloc.dart';
+import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
 import 'package:faleh_hafez/domain/user.dart';
-import 'package:faleh_hafez/presentation/secret/register_page_secret.dart';
+import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/register_page_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'home_page_secret.dart';
+import '../../../../application/chat_theme_changer/chat_theme_changer_bloc.dart';
+import '../../../../application/register_login/register_user_bloc.dart';
+import '../messenger_pages/home_page_chats.dart';
 
 class LoginPageSecret extends StatefulWidget {
   const LoginPageSecret({super.key});
@@ -16,7 +17,9 @@ class LoginPageSecret extends StatefulWidget {
 class _LoginPageSecretState extends State<LoginPageSecret> {
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
+
+  FocusNode _userNameFocusNode = FocusNode();
+  FocusNode _passwordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +44,6 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                 ),
               ),
               const SizedBox(height: 25),
-              BlocBuilder<LogRegUserBloc, LogRegUserState>(
-                builder: (context, state) {
-                  if (state is CheckExistenceUserState) {
-                    return Container(
-                      child: Text('error'),
-                    );
-                  }
-                  return Text('hi');
-                },
-              ),
               const SizedBox(height: 25),
               Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -75,6 +68,12 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                           title: Directionality(
                             textDirection: TextDirection.rtl,
                             child: TextFormField(
+                              focusNode: _userNameFocusNode,
+                              cursorColor: Colors.white,
+                              onFieldSubmitted: (value) {
+                                FocusScope.of(context)
+                                    .requestFocus(_passwordFocusNode);
+                              },
                               controller: _userNameController,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
@@ -115,8 +114,10 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                           title: Directionality(
                             textDirection: TextDirection.rtl,
                             child: TextFormField(
+                              focusNode: _passwordFocusNode,
                               keyboardType: TextInputType.number,
                               controller: _passwordController,
+                              cursorColor: Colors.white,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold,
@@ -148,20 +149,25 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                             ),
                             color: Theme.of(context).colorScheme.secondary,
                             onPressed: () async {
-                              context.read<LogRegUserBloc>().add(
-                                    LoginUser(
-                                      user: User(
-                                        password: _passwordController.text,
-                                        userName: _userNameController.text,
-                                      ),
-                                    ),
-                                  );
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HomePageSecret(
-                                    password: _passwordController.text,
-                                    title: _userNameController.text,
+                                  builder: (context) => BlocBuilder<
+                                      ChatThemeChangerBloc,
+                                      ChatThemeChangerState>(
+                                    builder: (context, state) {
+                                      if (state is ChatThemeChangerLoaded) {
+                                        return MaterialApp(
+                                          theme: state.theme,
+                                          home: HomePageChats(
+                                            nameOfUser:
+                                                _userNameController.text,
+                                          ),
+                                        );
+                                      }
+                                      return const HomePageChats(
+                                          nameOfUser: 'hi');
+                                    },
                                   ),
                                 ),
                               );
@@ -198,9 +204,22 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomePageSecret(
-                                        password: _passwordController.text,
-                                        title: _userNameController.text,
+                                      builder: (context) => BlocBuilder<
+                                          ChatThemeChangerBloc,
+                                          ChatThemeChangerState>(
+                                        builder: (context, state) {
+                                          if (state is ChatThemeChangerLoaded) {
+                                            return MaterialApp(
+                                              theme: state.theme,
+                                              home: HomePageChats(
+                                                nameOfUser:
+                                                    _userNameController.text,
+                                              ),
+                                            );
+                                          }
+                                          return const HomePageChats(
+                                              nameOfUser: 'hi');
+                                        },
                                       ),
                                     ),
                                   );
@@ -245,9 +264,21 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomePageSecret(
-                                  password: _passwordController.text,
-                                  title: _userNameController.text,
+                                builder: (context) => BlocBuilder<
+                                    ChatThemeChangerBloc,
+                                    ChatThemeChangerState>(
+                                  builder: (context, state) {
+                                    if (state is ChatThemeChangerLoaded) {
+                                      return MaterialApp(
+                                        theme: state.theme,
+                                        home: HomePageChats(
+                                          nameOfUser: _userNameController.text,
+                                        ),
+                                      );
+                                    }
+                                    return const HomePageChats(
+                                        nameOfUser: 'hi');
+                                  },
                                 ),
                               ),
                             );
@@ -269,7 +300,7 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const RegisterPageSecret(),
+                            builder: (context) => const RegisterPageMessenger(),
                           ),
                         );
                       },
