@@ -1,7 +1,8 @@
-import 'dart:math';
-
 import 'package:faleh_hafez/application/chat_theme_changer/chat_theme_changer_bloc.dart';
+import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
+import 'package:faleh_hafez/presentation/home/home_page.dart';
 import 'package:faleh_hafez/presentation/messenger/components/drawer_chat_item.dart';
+import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/register_page_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,20 +58,60 @@ class _DrawerHomeChatState extends State<DrawerHomeChat> {
               boxColor: Colors.grey,
               text: 'Settings',
               onTap: () async {
-                await Future.delayed(
-                  const Duration(seconds: 1),
-                );
-                // ignore: use_build_context_synchronously
                 context.read<ChatThemeChangerBloc>().add(ChangeChatPageTheme());
               },
               icon: Icons.settings,
             ),
             const SizedBox(height: 25),
-            DrawerItemChat(
-              boxColor: Colors.red,
-              text: 'logout',
-              onTap: () {},
-              icon: Icons.logout,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RegisterPageMessenger(),
+                  ),
+                );
+              },
+              onDoubleTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        BlocBuilder<ThemeChangerBloc, ThemeChangerState>(
+                      builder: (context, state) {
+                        if (state is ThemeChangerLoaded) {
+                          return MaterialApp(
+                            theme: state.theme,
+                            home: const HomePage(),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.red,
+                ),
+                child: const ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'Logout',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

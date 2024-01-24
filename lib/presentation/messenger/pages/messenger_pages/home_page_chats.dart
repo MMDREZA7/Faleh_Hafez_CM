@@ -23,6 +23,7 @@ class HomePageChats extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
           'Messenger',
@@ -51,13 +52,17 @@ class HomePageChats extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(12),
+                bottomRight: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
               color: Theme.of(context).colorScheme.onBackground,
             ),
             margin: const EdgeInsets.only(
-              top: 25,
-              right: 25,
-              left: 25,
+              top: 15,
+              right: 15,
+              left: 15,
             ),
             child: ListTile(
               title: Text(
@@ -73,9 +78,12 @@ class HomePageChats extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  Icons.person,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Icon(
+                    Icons.person,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
                 ),
               ),
             ),

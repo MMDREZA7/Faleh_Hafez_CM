@@ -16,16 +16,15 @@ class ChatThemeChangerBloc
   ChatThemeChangerBloc() : super(ChatThemeChangerInitial()) {
     on<ChangeChatPageTheme>((event, emit) async {
       emit(ChatThemeChangerLoading());
-      if (_myBox.isEmpty) {
+
+      var val = _myBox.get('chatTheme');
+
+      if (val == 'lightChatTheme') {
+        mainTheme = darkChatTheme;
+        _myBox.put('chatTheme', 'darkChatTheme');
+      } else if (val == 'darkChatTheme') {
         mainTheme = lightChatTheme;
-        _myBox.put('chatTheme', 'chatLightTheme');
-      } else {
-        var val = _myBox.get('chatTheme');
-        if (val == 'chatLightTheme') {
-          mainTheme = darkChatTheme;
-        } else {
-          mainTheme = lightChatTheme;
-        }
+        _myBox.put('chatTheme', 'lightChatTheme');
       }
 
       emit(
@@ -38,15 +37,8 @@ class ChatThemeChangerBloc
     on<FirstTimeOpenChat>((event, emit) async {
       emit(ChatThemeChangerLoading());
 
-      var val = _myBox.get('chatTheme');
-
-      if (val == 'chatDarkTheme') {
-        mainTheme = darkChatTheme;
-        _myBox.put('chatTheme', 'darkTheme');
-      } else {
-        mainTheme = lightChatTheme;
-        _myBox.put('chatTheme', 'chatLightTheme');
-      }
+      mainTheme = lightChatTheme;
+      _myBox.put('chatTheme', 'lightChatTheme');
 
       emit(ChatThemeChangerLoaded(theme: mainTheme));
     });

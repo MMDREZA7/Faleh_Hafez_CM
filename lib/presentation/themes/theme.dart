@@ -54,8 +54,8 @@ ThemeData darkChatTheme = ThemeData(
     background: Colors.grey.shade800,
     onBackground: Colors.grey.shade300,
     primary: Colors.grey.shade900,
-    onPrimary: Colors.grey.shade500,
+    onPrimary: Colors.grey.shade300,
     secondary: Colors.grey.shade700,
-    onSecondary: Colors.grey.shade500,
+    onSecondary: Colors.grey.shade300,
   ),
 );
