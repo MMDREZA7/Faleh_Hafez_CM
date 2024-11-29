@@ -1,9 +1,9 @@
+import 'package:faleh_hafez/application/authentiction/authentication_bloc.dart';
 import 'package:faleh_hafez/domain/user.dart';
 import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/register_page_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../application/chat_theme_changer/chat_theme_changer_bloc.dart';
-import '../../../../application/register_login/register_user_bloc.dart';
 import '../messenger_pages/home_page_chats.dart';
 
 class LoginPageSecret extends StatefulWidget {
@@ -14,7 +14,7 @@ class LoginPageSecret extends StatefulWidget {
 }
 
 class _LoginPageSecretState extends State<LoginPageSecret> {
-  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _mobileNumberController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   FocusNode _userNameFocusNode = FocusNode();
@@ -73,7 +73,7 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                                 FocusScope.of(context)
                                     .requestFocus(_passwordFocusNode);
                               },
-                              controller: _userNameController,
+                              controller: _mobileNumberController,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold,
@@ -138,9 +138,9 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                       ),
                     ),
                     const SizedBox(height: 25),
-                    BlocBuilder<LogRegUserBloc, LogRegUserState>(
+                    BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, state) {
-                        if (state is LogRegUserLoaded) {
+                        if (state is AuthenticationLoaded) {
                           return MaterialButton(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 100,
@@ -159,13 +159,13 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                                         return MaterialApp(
                                           theme: state.theme,
                                           home: HomePageChats(
-                                            nameOfUser:
-                                                _userNameController.text,
+                                            userMobile:
+                                                _mobileNumberController.text,
                                           ),
                                         );
                                       }
                                       return const HomePageChats(
-                                          nameOfUser: 'hi');
+                                          userMobile: 'hi');
                                     },
                                   ),
                                 ),
@@ -182,7 +182,7 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                             ),
                           );
                         }
-                        if (state is LogRegUserError) {
+                        if (state is AuthenticationError) {
                           return Column(
                             children: [
                               MaterialButton(
@@ -192,11 +192,12 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                                 ),
                                 color: Theme.of(context).colorScheme.secondary,
                                 onPressed: () async {
-                                  context.read<LogRegUserBloc>().add(
+                                  context.read<AuthenticationBloc>().add(
                                         LoginUser(
                                           user: User(
                                             password: _passwordController.text,
-                                            userName: _userNameController.text,
+                                            mobileNumber:
+                                                _mobileNumberController.text,
                                           ),
                                         ),
                                       );
@@ -211,16 +212,29 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                                             return MaterialApp(
                                               theme: state.theme,
                                               home: HomePageChats(
-                                                nameOfUser:
-                                                    _userNameController.text,
+                                                userMobile:
+                                                    _mobileNumberController
+                                                        .text,
                                               ),
                                             );
                                           }
                                           return const HomePageChats(
-                                              nameOfUser: 'hi');
+                                              userMobile: 'hi');
                                         },
                                       ),
                                     ),
+                                  );
+                                  BlocProvider(
+                                    create: (context) => AuthenticationBloc()
+                                      ..add(
+                                        LoginUser(
+                                          user: User(
+                                            password: _passwordController.text,
+                                            mobileNumber:
+                                                _mobileNumberController.text,
+                                          ),
+                                        ),
+                                      ),
                                   );
                                 },
                                 child: Text(
@@ -252,11 +266,12 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                           ),
                           color: Theme.of(context).colorScheme.secondary,
                           onPressed: () async {
-                            context.read<LogRegUserBloc>().add(
+                            context.read<AuthenticationBloc>().add(
                                   LoginUser(
                                     user: User(
                                       password: _passwordController.text,
-                                      userName: _userNameController.text,
+                                      mobileNumber:
+                                          _mobileNumberController.text,
                                     ),
                                   ),
                                 );
@@ -271,12 +286,13 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                                       return MaterialApp(
                                         theme: state.theme,
                                         home: HomePageChats(
-                                          nameOfUser: _userNameController.text,
+                                          userMobile:
+                                              _mobileNumberController.text,
                                         ),
                                       );
                                     }
                                     return const HomePageChats(
-                                        nameOfUser: 'hi');
+                                        userMobile: 'hi');
                                   },
                                 ),
                               ),

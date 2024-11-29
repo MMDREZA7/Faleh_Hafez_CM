@@ -1,10 +1,12 @@
+import 'package:faleh_hafez/application/authentiction/authentication_bloc.dart';
+import 'package:faleh_hafez/domain/user.dart';
 import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/login_page_chat.dart';
 import 'package:faleh_hafez/presentation/messenger/pages/messenger_pages/home_page_chats.dart';
+import 'package:faleh_hafez/presentation/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../application/chat_theme_changer/chat_theme_changer_bloc.dart';
-import '../../../../application/register_login/register_user_bloc.dart';
 
 class RegisterPageMessenger extends StatefulWidget {
   const RegisterPageMessenger({super.key});
@@ -14,16 +16,136 @@ class RegisterPageMessenger extends StatefulWidget {
 }
 
 class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
-  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _mobileNumberController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
 
-  FocusNode _userNameFocusNode = FocusNode();
+  FocusNode _mobileNumberFocusNode = FocusNode();
   FocusNode _passwordFocusNode = FocusNode();
   FocusNode _confirmPasswordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
+    void handleRegister() async {
+      if (_mobileNumberController.text == '') {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.red[900],
+            title: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text(
+                'شماره تلفن خود را وارد کنید',
+              ),
+            ),
+          ),
+        );
+      }
+      if (_mobileNumberController.text.length != 11) {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.red[900],
+            title: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text(
+                'شماره تلفن باید 11  رقمی باشد و با 09 شروع شود',
+              ),
+            ),
+          ),
+        );
+      }
+      if (_passwordController.text == '') {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.red[900],
+            title: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text(
+                'رمز خود را وارد کنید',
+              ),
+            ),
+          ),
+        );
+      }
+      if (_confirmPasswordController.text == '') {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.red[900],
+            title: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text(
+                'تاییدیه رمز خود را وارد کنید',
+              ),
+            ),
+          ),
+        );
+      } else if (_passwordController.text != _confirmPasswordController.text) {
+        return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Colors.red[900],
+            title: const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Text(
+                'رمز و تاییدیه رمز باید با هم برابر باشد',
+              ),
+            ),
+          ),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                BlocBuilder<ChatThemeChangerBloc, ChatThemeChangerState>(
+              builder: (context, state) {
+                if (state is ChatThemeChangerLoaded) {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        const AlertDialog(title: Text('You was Registered!')),
+                  );
+                  return MaterialApp(
+                    theme: darkTheme,
+                    debugShowCheckedModeBanner: false,
+                    home: HomePageChats(
+                      userMobile: _mobileNumberController.text,
+                    ),
+                  );
+                }
+                return const HomePageChats(userMobile: '09000000000');
+              },
+            ),
+          ),
+        );
+        BlocProvider(
+          create: (context) => AuthenticationBloc()
+            ..add(
+              RegisterUser(
+                user: User(
+                    password: _passwordController.text,
+                    mobileNumber: _mobileNumberController.text),
+              ),
+            ),
+        );
+      }
+
+      BlocProvider(
+        create: (context) => AuthenticationBloc()
+          ..add(
+            RegisterUser(
+              user: User(
+                password: _passwordController.text,
+                mobileNumber: _mobileNumberController.text.toString(),
+              ),
+            ),
+          ),
+      );
+    }
+
     String? errorText;
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +172,7 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // username feild
+                    // mobileNumber feild
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -65,33 +187,36 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
                             size: 40,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
-                          title: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              focusNode: _userNameFocusNode,
-                              controller: _userNameController,
-                              cursorColor: Colors.white,
-                              onFieldSubmitted: (value) {
-                                FocusScope.of(context)
-                                    .requestFocus(_passwordFocusNode);
-                              },
-                              style: TextStyle(
+                          title:
+                              // Directionality(
+                              // textDirection: TextDirection.rtl,
+                              // child:
+                              TextFormField(
+                            focusNode: _mobileNumberFocusNode,
+                            controller: _mobileNumberController,
+                            keyboardType: TextInputType.phone,
+                            maxLength: 11,
+                            cursorColor: Colors.white,
+                            onFieldSubmitted: (value) {
+                              FocusScope.of(context)
+                                  .requestFocus(_passwordFocusNode);
+                            },
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'شماره تلفن',
+                              hintStyle: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'نام کاربری',
-                                hintStyle: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                ),
+                                fontSize: 22,
                               ),
                             ),
                           ),
+                          // ),
                         ),
                       ),
                     ),
@@ -200,27 +325,7 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
                         vertical: 25,
                       ),
                       color: Theme.of(context).colorScheme.secondary,
-                      onPressed: () async {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BlocBuilder<
-                                ChatThemeChangerBloc, ChatThemeChangerState>(
-                              builder: (context, state) {
-                                if (state is ChatThemeChangerLoaded) {
-                                  return MaterialApp(
-                                    theme: state.theme,
-                                    home: HomePageChats(
-                                      nameOfUser: _userNameController.text,
-                                    ),
-                                  );
-                                }
-                                return const HomePageChats(nameOfUser: 'hi');
-                              },
-                            ),
-                          ),
-                        );
-                      },
+                      onPressed: () async {},
                       child: Text(
                         'ثبت نام',
                         style: TextStyle(
@@ -237,7 +342,7 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
-                              create: (context) => LogRegUserBloc(),
+                              create: (context) => AuthenticationBloc(),
                               child: const LoginPageSecret(),
                             ),
                           ),

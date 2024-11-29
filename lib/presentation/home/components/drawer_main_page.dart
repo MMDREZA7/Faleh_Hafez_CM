@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:faleh_hafez/application/authentiction/authentication_bloc.dart';
 import 'package:faleh_hafez/application/chat_theme_changer/chat_theme_changer_bloc.dart';
 import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
 import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
@@ -8,7 +9,6 @@ import 'package:faleh_hafez/presentation/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../application/register_login/register_user_bloc.dart';
 import '../../messenger/pages/login & register/register_page_chat.dart';
 import 'button.dart';
 
@@ -188,7 +188,7 @@ class _MyDrawerState extends State<MyDrawer> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => BlocProvider(
-                                      create: (context) => LogRegUserBloc(),
+                                      create: (context) => AuthenticationBloc(),
                                       child: MaterialApp(
                                         theme: secretPageTheme,
                                         home: BlocProvider(

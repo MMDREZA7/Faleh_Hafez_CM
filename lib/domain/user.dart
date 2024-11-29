@@ -1,8 +1,8 @@
 class User {
-  final String userName;
+  final String mobileNumber;
   final String password;
   User({
     required this.password,
-    required this.userName,
+    required this.mobileNumber,
   });
 }
