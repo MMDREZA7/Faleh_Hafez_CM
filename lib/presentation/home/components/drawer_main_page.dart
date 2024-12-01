@@ -5,6 +5,7 @@ import 'package:faleh_hafez/application/omen_list/omen_list_bloc.dart';
 import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
 import 'package:faleh_hafez/presentation/about/about_us.dart';
 import 'package:faleh_hafez/presentation/home/components/exit_button.dart';
+import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/login_page_chat.dart';
 import 'package:faleh_hafez/presentation/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -183,7 +184,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           MaterialButton(
                             color: Theme.of(context).colorScheme.onPrimary,
                             onPressed: () {
-                              if (_searchController.text == '133') {
+                              if (_searchController.text == '159') {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -194,7 +195,7 @@ class _MyDrawerState extends State<MyDrawer> {
                                         home: BlocProvider(
                                           create: (context) =>
                                               ChatThemeChangerBloc(),
-                                          child: const RegisterPageMessenger(),
+                                          child: const LoginPageMessenger(),
                                         ),
                                       ),
                                     ),

@@ -1,24 +1,26 @@
 import 'package:faleh_hafez/application/authentiction/authentication_bloc.dart';
-import 'package:faleh_hafez/domain/user.dart';
+import 'package:faleh_hafez/domain/user_reginster_login_dto.dart';
 import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/register_page_chat.dart';
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../application/chat_theme_changer/chat_theme_changer_bloc.dart';
 import '../messenger_pages/home_page_chats.dart';
+import 'package:flash/flash_helper.dart';
 
-class LoginPageSecret extends StatefulWidget {
-  const LoginPageSecret({super.key});
+class LoginPageMessenger extends StatefulWidget {
+  const LoginPageMessenger({super.key});
 
   @override
-  State<LoginPageSecret> createState() => _LoginPageSecretState();
+  State<LoginPageMessenger> createState() => _LoginPageMessengerState();
 }
 
-class _LoginPageSecretState extends State<LoginPageSecret> {
-  TextEditingController _mobileNumberController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+class _LoginPageMessengerState extends State<LoginPageMessenger> {
+  final TextEditingController _mobileNumberController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  FocusNode _userNameFocusNode = FocusNode();
-  FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _mobileNumberFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // username feild
+                    // mobileNumber feild
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
@@ -64,30 +66,32 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                             size: 40,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
-                          title: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              focusNode: _userNameFocusNode,
-                              cursorColor: Colors.white,
-                              onFieldSubmitted: (value) {
-                                FocusScope.of(context)
-                                    .requestFocus(_passwordFocusNode);
-                              },
-                              controller: _mobileNumberController,
-                              style: TextStyle(
+                          title:
+                              // Directionality(
+                              // textDirection: TextDirection.rtl,
+                              // child:
+                              TextFormField(
+                            focusNode: _mobileNumberFocusNode,
+                            controller: _mobileNumberController,
+                            keyboardType: TextInputType.phone,
+                            // maxLength: 11,
+                            cursorColor: Colors.white,
+                            onFieldSubmitted: (value) {
+                              FocusScope.of(context)
+                                  .requestFocus(_passwordFocusNode);
+                            },
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'شماره تلفن',
+                              hintStyle: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'نام کاربری',
-                                hintStyle: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                ),
+                                fontSize: 22,
                               ),
                             ),
                           ),
@@ -110,153 +114,81 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                             size: 40,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
-                          title: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              focusNode: _passwordFocusNode,
-                              keyboardType: TextInputType.number,
-                              controller: _passwordController,
-                              cursorColor: Colors.white,
-                              style: TextStyle(
+                          title:
+                              // Directionality(
+                              // textDirection: TextDirection.rtl,
+                              // child:
+                              TextFormField(
+                            cursorColor: Colors.white,
+                            keyboardType: TextInputType.number,
+                            focusNode: _passwordFocusNode,
+                            controller: _passwordController,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'رمز عبور',
+                              hintStyle: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'رمز عبور',
-                                hintStyle: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                ),
+                                fontSize: 22,
                               ),
                             ),
                           ),
+                          // ),
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 25),
-                    BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                    BlocConsumer<AuthenticationBloc, AuthenticationState>(
+                      listener: (context, state) {
+                        if (state is AuthenticationLoginSuccess) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocBuilder<
+                                  ChatThemeChangerBloc, ChatThemeChangerState>(
+                                builder: (context, state) {
+                                  if (state is ChatThemeChangerLoaded) {
+                                    return MaterialApp(
+                                      theme: state.theme,
+                                      home: HomePageChats(
+                                        userMobile:
+                                            _mobileNumberController.text,
+                                      ),
+                                    );
+                                  }
+                                  return const HomePageChats(
+                                    userMobile: 'hi',
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+
+                          context.showSuccessBar(
+                            content: const Text("خوش آمدید"),
+                          );
+                        }
+                        if (state is AuthenticationError) {
+                          // flash(state.errorText);
+                          context.showErrorBar(content: Text(state.errorText));
+                        }
+                      },
                       builder: (context, state) {
-                        if (state is AuthenticationLoaded) {
+                        if (state is AuthenticationLoading) {
                           return MaterialButton(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 100,
                               vertical: 25,
                             ),
                             color: Theme.of(context).colorScheme.secondary,
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BlocBuilder<
-                                      ChatThemeChangerBloc,
-                                      ChatThemeChangerState>(
-                                    builder: (context, state) {
-                                      if (state is ChatThemeChangerLoaded) {
-                                        return MaterialApp(
-                                          theme: state.theme,
-                                          home: HomePageChats(
-                                            userMobile:
-                                                _mobileNumberController.text,
-                                          ),
-                                        );
-                                      }
-                                      return const HomePageChats(
-                                          userMobile: 'hi');
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              'ورود',
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary,
-                              ),
-                            ),
-                          );
-                        }
-                        if (state is AuthenticationError) {
-                          return Column(
-                            children: [
-                              MaterialButton(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 100,
-                                  vertical: 25,
-                                ),
-                                color: Theme.of(context).colorScheme.secondary,
-                                onPressed: () async {
-                                  context.read<AuthenticationBloc>().add(
-                                        LoginUser(
-                                          user: User(
-                                            password: _passwordController.text,
-                                            mobileNumber:
-                                                _mobileNumberController.text,
-                                          ),
-                                        ),
-                                      );
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => BlocBuilder<
-                                          ChatThemeChangerBloc,
-                                          ChatThemeChangerState>(
-                                        builder: (context, state) {
-                                          if (state is ChatThemeChangerLoaded) {
-                                            return MaterialApp(
-                                              theme: state.theme,
-                                              home: HomePageChats(
-                                                userMobile:
-                                                    _mobileNumberController
-                                                        .text,
-                                              ),
-                                            );
-                                          }
-                                          return const HomePageChats(
-                                              userMobile: 'hi');
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                  BlocProvider(
-                                    create: (context) => AuthenticationBloc()
-                                      ..add(
-                                        LoginUser(
-                                          user: User(
-                                            password: _passwordController.text,
-                                            mobileNumber:
-                                                _mobileNumberController.text,
-                                          ),
-                                        ),
-                                      ),
-                                  );
-                                },
-                                child: Text(
-                                  'ورود',
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                state.errorText,
-                                style: const TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                            onPressed: () {},
+                            child: const CircularProgressIndicator(),
                           );
                         }
                         return MaterialButton(
@@ -266,37 +198,56 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                           ),
                           color: Theme.of(context).colorScheme.secondary,
                           onPressed: () async {
+                            if (_mobileNumberController.text.length != 11) {
+                              context.showErrorBar(
+                                content: const Text("شماره باید 11 رقم باشد."),
+                              );
+
+                              return;
+                            }
+
+                            if (_mobileNumberController.text == "" ||
+                                _passwordController.text == "") {
+                              context.showErrorBar(
+                                content: const Text(
+                                    "فیلدهای موبایل و پسورد الزامی هستند."),
+                              );
+
+                              return;
+                            }
+
                             context.read<AuthenticationBloc>().add(
                                   LoginUser(
-                                    user: User(
+                                    user: UserRegisterLoginDTO(
                                       password: _passwordController.text,
                                       mobileNumber:
                                           _mobileNumberController.text,
                                     ),
                                   ),
                                 );
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BlocBuilder<
-                                    ChatThemeChangerBloc,
-                                    ChatThemeChangerState>(
-                                  builder: (context, state) {
-                                    if (state is ChatThemeChangerLoaded) {
-                                      return MaterialApp(
-                                        theme: state.theme,
-                                        home: HomePageChats(
-                                          userMobile:
-                                              _mobileNumberController.text,
-                                        ),
-                                      );
-                                    }
-                                    return const HomePageChats(
-                                        userMobile: 'hi');
-                                  },
-                                ),
-                              ),
-                            );
+                            // Navigator.pushReplacement(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => BlocBuilder<
+                            //         ChatThemeChangerBloc,
+                            //         ChatThemeChangerState>(
+                            //       builder: (context, state) {
+                            //         if (state is ChatThemeChangerLoaded) {
+                            //           return MaterialApp(
+                            //             theme: state.theme,
+                            //             home: HomePageChats(
+                            //               userMobile:
+                            //                   _mobileNumberController.text,
+                            //             ),
+                            //           );
+                            //         }
+                            //         return const HomePageChats(
+                            //           userMobile: 'hi',
+                            //         );
+                            //       },
+                            //     ),
+                            //   ),
+                            // );
                           },
                           child: Text(
                             'ورود',
@@ -320,7 +271,7 @@ class _LoginPageSecretState extends State<LoginPageSecret> {
                         );
                       },
                       child: const Text(
-                        "تا به حال اکانت نداشته اید؟",
+                        "تا به حال اکانت نداشته اید؟ / ثبت نام کنید",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,

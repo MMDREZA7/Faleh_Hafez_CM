@@ -7,13 +7,11 @@ class AuthenticationInitial extends AuthenticationState {}
 
 class AuthenticationLoading extends AuthenticationState {}
 
-class AuthenticationLoaded extends AuthenticationState {
+class AuthenticationLoginSuccess extends AuthenticationState {
   final User user;
-  final String responseMessage;
 
-  AuthenticationLoaded({
+  AuthenticationLoginSuccess({
     required this.user,
-    required this.responseMessage,
   });
 }
 

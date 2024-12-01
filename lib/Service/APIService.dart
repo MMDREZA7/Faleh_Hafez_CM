@@ -1,21 +1,28 @@
 import 'dart:convert';
 
+import 'package:faleh_hafez/domain/user.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
   final String baseUrl = "http://130.185.76.18:3030";
 
   // Example for GET request
-  Future<dynamic> registerUser(String mobileNumber, String password) async {
+  Future<String> registerUser(String mobileNumber, String password) async {
     final url = Uri.parse('$baseUrl/api/Autentication/Register');
+    var bodyRequest = {
+      "id": "71ce376c-5a68-4e3b-c251-08dd107067d5",
+      "mobileNumber": "09120000001",
+      "token": '',
+      "type": ''
+    };
     try {
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: json.encode({mobileNumber, password}),
+        body: json.encode({bodyRequest}),
       );
       if (response.statusCode == 201 || response.statusCode == 200) {
-        return response.body;
+        return;
       } else {
         print("Failed to post data: ${response.statusCode}");
         throw Exception("Failed to post data: ${response.statusCode}");
@@ -26,23 +33,31 @@ class ApiService {
     }
   }
 
-  Future<dynamic> loginUser(String mobileNumber, String password) async {
-    final url = Uri.parse('$baseUrl/api/Autentication/Login');
+  Future<User> loginUser(String mobileNumber, String password) async {
+    final url = Uri.parse('$baseUrl/api/Authentication/Login');
     try {
+      var bodyRequest = {"mobileNumber": mobileNumber, "password": password};
+
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: json.encode({mobileNumber, password}),
+        body: json.encode(bodyRequest),
       );
+
       if (response.statusCode == 201 || response.statusCode == 200) {
-        return response.body;
+        var bodyContent = json.decode(response.body);
+        var user = User(
+          id: bodyContent["id"],
+          mobileNumber: bodyContent["mobileNumber"],
+          token: bodyContent["token"],
+          type: bodyContent["type"],
+        );
+        return user;
       } else {
-        print("Failed to post data: ${response.statusCode}");
         throw Exception("Failed to post data: ${response.statusCode}");
       }
     } catch (e) {
-      print("Error: $e");
-      throw Exception("Error: $e");
+      rethrow;
     }
   }
 

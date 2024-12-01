@@ -1,8 +1,9 @@
 import 'package:faleh_hafez/application/authentiction/authentication_bloc.dart';
-import 'package:faleh_hafez/domain/user.dart';
+// import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
+import 'package:faleh_hafez/domain/user_reginster_login_dto.dart';
 import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/login_page_chat.dart';
 import 'package:faleh_hafez/presentation/messenger/pages/messenger_pages/home_page_chats.dart';
-import 'package:faleh_hafez/presentation/themes/theme.dart';
+// import 'package:faleh_hafez/presentation/themes/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +27,7 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
 
   @override
   Widget build(BuildContext context) {
-    void handleRegister() async {
+    void Register() async {
       if (_mobileNumberController.text == '') {
         return showDialog(
           context: context,
@@ -103,13 +104,8 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
                 BlocBuilder<ChatThemeChangerBloc, ChatThemeChangerState>(
               builder: (context, state) {
                 if (state is ChatThemeChangerLoaded) {
-                  showDialog(
-                    context: context,
-                    builder: (context) =>
-                        const AlertDialog(title: Text('You was Registered!')),
-                  );
                   return MaterialApp(
-                    theme: darkTheme,
+                    theme: state.theme,
                     debugShowCheckedModeBanner: false,
                     home: HomePageChats(
                       userMobile: _mobileNumberController.text,
@@ -125,7 +121,7 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
           create: (context) => AuthenticationBloc()
             ..add(
               RegisterUser(
-                user: User(
+                user: UserRegisterLoginDTO(
                     password: _passwordController.text,
                     mobileNumber: _mobileNumberController.text),
               ),
@@ -137,7 +133,7 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
         create: (context) => AuthenticationBloc()
           ..add(
             RegisterUser(
-              user: User(
+              user: UserRegisterLoginDTO(
                 password: _passwordController.text,
                 mobileNumber: _mobileNumberController.text.toString(),
               ),
@@ -325,7 +321,7 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
                         vertical: 25,
                       ),
                       color: Theme.of(context).colorScheme.secondary,
-                      onPressed: () async {},
+                      onPressed: () async => Register(),
                       child: Text(
                         'ثبت نام',
                         style: TextStyle(
@@ -343,13 +339,13 @@ class _RegisterPageMessengerState extends State<RegisterPageMessenger> {
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
                               create: (context) => AuthenticationBloc(),
-                              child: const LoginPageSecret(),
+                              child: const LoginPageMessenger(),
                             ),
                           ),
                         );
                       },
                       child: const Text(
-                        "اکانت داشته اید؟",
+                        "اکانت داشته اید؟ / وارد شوید",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,

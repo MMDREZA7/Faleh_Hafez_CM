@@ -4,7 +4,7 @@ part of 'authentication_bloc.dart';
 sealed class AuthenticationEvent {}
 
 class RegisterUser extends AuthenticationEvent {
-  final User user;
+  final UserRegisterLoginDTO user;
 
   RegisterUser({
     required this.user,
@@ -12,7 +12,7 @@ class RegisterUser extends AuthenticationEvent {
 }
 
 class LoginUser extends AuthenticationEvent {
-  final User user;
+  final UserRegisterLoginDTO user;
 
   LoginUser({
     required this.user,
