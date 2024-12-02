@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:faleh_hafez/domain/user_chat.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatPage extends StatefulWidget {
-  final String nameOfContent;
+  final UserChatItem userChatItem;
 
   const ChatPage({
     super.key,
-    required this.nameOfContent,
+    required this.userChatItem,
   });
 
   @override
@@ -25,8 +26,9 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<types.Message> _messages = [];
+
   final _user = const types.User(
-    id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
+    id: '77654420-0ba6-4c2f-df4b-08dd120a6889',
   );
 
   @override
@@ -49,7 +51,7 @@ class _ChatPageState extends State<ChatPage> {
           height: 144,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+            children: [
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -57,7 +59,10 @@ class _ChatPageState extends State<ChatPage> {
                 },
                 child: const Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: Text('Photo'),
+                  child: Text(
+                    'Photo',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               TextButton(
@@ -67,14 +72,20 @@ class _ChatPageState extends State<ChatPage> {
                 },
                 child: const Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: Text('File'),
+                  child: Text(
+                    'File',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: Text('Cancel'),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],
@@ -215,7 +226,16 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Colors.grey[900],
         appBar: AppBar(
-          title: Text(widget.nameOfContent),
+          title: Text(widget.userChatItem.id),
+          actions: [
+            IconButton(
+              onPressed: () => print("HI"),
+              icon: Icon(
+                Icons.refresh,
+                color: Theme.of(context).primaryColorLight,
+              ),
+            ),
+          ],
         ),
         body: Chat(
           messages: _messages,

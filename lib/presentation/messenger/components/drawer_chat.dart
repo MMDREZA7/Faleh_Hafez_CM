@@ -1,17 +1,20 @@
 import 'package:faleh_hafez/application/chat_theme_changer/chat_theme_changer_bloc.dart';
 import 'package:faleh_hafez/application/theme_changer/theme_changer_bloc.dart';
+import 'package:faleh_hafez/domain/user.dart';
 import 'package:faleh_hafez/presentation/home/home_page.dart';
 import 'package:faleh_hafez/presentation/messenger/components/drawer_chat_item.dart';
 import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/register_page_chat.dart';
+import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DrawerHomeChat extends StatefulWidget {
-  final String userName;
+  final User user;
 
   const DrawerHomeChat({
     super.key,
-    required this.userName,
+    required this.user,
   });
 
   @override
@@ -37,9 +40,50 @@ class _DrawerHomeChatState extends State<DrawerHomeChat> {
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 title: Text(
-                  widget.userName,
+                  widget.user.mobileNumber,
                   style: TextStyle(
                     fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: IconButton(
+                  onPressed: () {
+                    Clipboard.setData(
+                      ClipboardData(
+                        text: widget.user.id,
+                      ),
+                    ).then((_) {
+                      context.showInfoBar(
+                        content: const Text('Your ID copied to clipboard ;)'),
+                      );
+                    });
+                  },
+                  icon: Icon(
+                    Icons.copy,
+                    size: 20,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                // Icon(
+                //   Icons.person,
+                //   color: Theme.of(context).colorScheme.onPrimary,
+                // ),
+                title: Text(
+                  widget.user.id,
+                  style: TextStyle(
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),

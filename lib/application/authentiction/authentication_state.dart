@@ -15,6 +15,14 @@ class AuthenticationLoginSuccess extends AuthenticationState {
   });
 }
 
+class AuthenticationRegisterSuccess extends AuthenticationState {
+  final String responseMessage;
+
+  AuthenticationRegisterSuccess({
+    required this.responseMessage,
+  });
+}
+
 class AuthenticationError extends AuthenticationState {
   final String errorText;
 

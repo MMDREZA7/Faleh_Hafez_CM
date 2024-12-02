@@ -1,4 +1,5 @@
 import 'package:faleh_hafez/application/authentiction/authentication_bloc.dart';
+import 'package:faleh_hafez/domain/user.dart';
 import 'package:faleh_hafez/domain/user_reginster_login_dto.dart';
 import 'package:faleh_hafez/presentation/messenger/pages/login%20&%20register/register_page_chat.dart';
 import 'package:flash/flash.dart';
@@ -66,15 +67,10 @@ class _LoginPageMessengerState extends State<LoginPageMessenger> {
                             size: 40,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
-                          title:
-                              // Directionality(
-                              // textDirection: TextDirection.rtl,
-                              // child:
-                              TextFormField(
+                          title: TextFormField(
                             focusNode: _mobileNumberFocusNode,
                             controller: _mobileNumberController,
-                            keyboardType: TextInputType.phone,
-                            // maxLength: 11,
+                            keyboardType: TextInputType.text,
                             cursorColor: Colors.white,
                             onFieldSubmitted: (value) {
                               FocusScope.of(context)
@@ -114,11 +110,7 @@ class _LoginPageMessengerState extends State<LoginPageMessenger> {
                             size: 40,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
-                          title:
-                              // Directionality(
-                              // textDirection: TextDirection.rtl,
-                              // child:
-                              TextFormField(
+                          title: TextFormField(
                             cursorColor: Colors.white,
                             keyboardType: TextInputType.number,
                             focusNode: _passwordFocusNode,
@@ -138,7 +130,6 @@ class _LoginPageMessengerState extends State<LoginPageMessenger> {
                               ),
                             ),
                           ),
-                          // ),
                         ),
                       ),
                     ),
@@ -152,18 +143,22 @@ class _LoginPageMessengerState extends State<LoginPageMessenger> {
                             MaterialPageRoute(
                               builder: (context) => BlocBuilder<
                                   ChatThemeChangerBloc, ChatThemeChangerState>(
-                                builder: (context, state) {
-                                  if (state is ChatThemeChangerLoaded) {
+                                builder: (context, themeChanger) {
+                                  if (themeChanger is ChatThemeChangerLoaded) {
                                     return MaterialApp(
-                                      theme: state.theme,
+                                      theme: themeChanger.theme,
                                       home: HomePageChats(
-                                        userMobile:
-                                            _mobileNumberController.text,
+                                        user: state.user,
                                       ),
                                     );
                                   }
-                                  return const HomePageChats(
-                                    userMobile: 'hi',
+                                  return HomePageChats(
+                                    user: User(
+                                      id: 'id',
+                                      mobileNumber: 'mobileNumber',
+                                      token: 'token',
+                                      type: 0000000000,
+                                    ),
                                   );
                                 },
                               ),
@@ -175,7 +170,6 @@ class _LoginPageMessengerState extends State<LoginPageMessenger> {
                           );
                         }
                         if (state is AuthenticationError) {
-                          // flash(state.errorText);
                           context.showErrorBar(content: Text(state.errorText));
                         }
                       },
@@ -225,29 +219,6 @@ class _LoginPageMessengerState extends State<LoginPageMessenger> {
                                     ),
                                   ),
                                 );
-                            // Navigator.pushReplacement(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => BlocBuilder<
-                            //         ChatThemeChangerBloc,
-                            //         ChatThemeChangerState>(
-                            //       builder: (context, state) {
-                            //         if (state is ChatThemeChangerLoaded) {
-                            //           return MaterialApp(
-                            //             theme: state.theme,
-                            //             home: HomePageChats(
-                            //               userMobile:
-                            //                   _mobileNumberController.text,
-                            //             ),
-                            //           );
-                            //         }
-                            //         return const HomePageChats(
-                            //           userMobile: 'hi',
-                            //         );
-                            //       },
-                            //     ),
-                            //   ),
-                            // );
                           },
                           child: Text(
                             'ورود',

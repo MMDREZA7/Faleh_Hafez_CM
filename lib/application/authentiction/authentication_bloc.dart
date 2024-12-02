@@ -20,10 +20,29 @@ class AuthenticationBloc
     on<RegisterUser>((event, emit) async {
       emit(AuthenticationLoading());
 
-      final response = ApiService().registerUser(
-        event.user.mobileNumber,
-        event.user.password,
-      );
+      try {
+        await ApiService().registerUser(
+          event.user.mobileNumber,
+          event.user.password,
+        );
+
+        add(
+          LoginUser(
+            user: UserRegisterLoginDTO(
+              password: event.user.password,
+              mobileNumber: event.user.mobileNumber,
+            ),
+          ),
+        );
+
+        // emit(
+        //   AuthenticationRegisterSuccess(responseMessage: "RsgisterSuccse"),
+        // );
+      } catch (e) {
+        emit(
+          AuthenticationError(errorText: e.toString().split(":")[1]),
+        );
+      }
     });
 
     on<LoginUser>((event, emit) async {
@@ -40,7 +59,7 @@ class AuthenticationBloc
         );
       } catch (e) {
         emit(
-          AuthenticationError(errorText: e.toString()),
+          AuthenticationError(errorText: e.toString().split(":")[1]),
         );
       }
     });

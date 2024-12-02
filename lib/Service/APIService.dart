@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:faleh_hafez/domain/user.dart';
+import 'package:faleh_hafez/domain/user_chat.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -8,28 +11,24 @@ class ApiService {
 
   // Example for GET request
   Future<String> registerUser(String mobileNumber, String password) async {
-    final url = Uri.parse('$baseUrl/api/Autentication/Register');
-    var bodyRequest = {
-      "id": "71ce376c-5a68-4e3b-c251-08dd107067d5",
-      "mobileNumber": "09120000001",
-      "token": '',
-      "type": ''
-    };
+    final url = Uri.parse('$baseUrl/api/Authentication/Register');
+
     try {
+      var bodyRequest = {"mobileNumber": mobileNumber, "password": password};
+
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: json.encode({bodyRequest}),
+        body: json.encode(bodyRequest),
       );
+
       if (response.statusCode == 201 || response.statusCode == 200) {
-        return;
+        return response.body;
       } else {
-        print("Failed to post data: ${response.statusCode}");
-        throw Exception("Failed to post data: ${response.statusCode}");
+        throw Exception(response.body);
       }
     } catch (e) {
-      print("Error: $e");
-      throw Exception("Error: $e");
+      rethrow;
     }
   }
 
@@ -54,29 +53,49 @@ class ApiService {
         );
         return user;
       } else {
-        throw Exception("Failed to post data: ${response.statusCode}");
+        throw Exception(response.body);
       }
     } catch (e) {
       rethrow;
     }
   }
 
-  // Example for POST request
-  Future<dynamic> postData(String endpoint, Map<String, dynamic> data) async {
-    final url = Uri.parse('$baseUrl/$endpoint');
+  Future<List<UserChatItem>> getUsersChat({required String token}) async {
+    final url = Uri.parse('$baseUrl/api/Chat/GetUserChats');
+
     try {
-      final response = await http.post(
+      final response = await http.get(
         url,
-        headers: {"Content-Type": "application/json"},
-        body: json.encode(data),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
       );
+
       if (response.statusCode == 201 || response.statusCode == 200) {
-        return json.decode(response.body);
+        var bodyContent = json.decode(response.body);
+
+        final List<UserChatItem> userChatItems = [];
+
+        for (var item in bodyContent) {
+          userChatItems.add(
+            UserChatItem(
+              id: item['id'],
+              participant1ID: item['participant1ID'],
+              participant1MobileNumber: item['participant1MobileNumber'],
+              participant2ID: item['participant2ID'],
+              participant2MobileNumber: item['participant2MobileNumber'],
+              lastMessageTime: item['lastMessageTime'],
+            ),
+          );
+        }
+
+        return userChatItems;
       } else {
-        throw Exception("Failed to post data: ${response.statusCode}");
+        throw Exception(response.body);
       }
     } catch (e) {
-      throw Exception("Error: $e");
+      rethrow;
     }
   }
 }

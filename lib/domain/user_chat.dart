@@ -1,0 +1,17 @@
+class UserChatItem {
+  final String id;
+  final String participant1ID;
+  final String participant1MobileNumber;
+  final String participant2ID;
+  final String participant2MobileNumber;
+  final String lastMessageTime;
+
+  UserChatItem({
+    required this.id,
+    required this.participant1ID,
+    required this.participant1MobileNumber,
+    required this.participant2ID,
+    required this.participant2MobileNumber,
+    required this.lastMessageTime,
+  });
+}

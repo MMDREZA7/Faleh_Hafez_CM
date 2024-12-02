@@ -21,7 +21,8 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController =
+      TextEditingController(text: "159");
 
   FocusNode _searchFocusNode = FocusNode();
 
