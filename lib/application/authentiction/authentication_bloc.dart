@@ -21,7 +21,7 @@ class AuthenticationBloc
       emit(AuthenticationLoading());
 
       try {
-        await ApiService().registerUser(
+        await APIService().registerUser(
           event.user.mobileNumber,
           event.user.password,
         );
@@ -49,7 +49,7 @@ class AuthenticationBloc
       emit(AuthenticationLoading());
 
       try {
-        final response = await ApiService().loginUser(
+        final response = await APIService().loginUser(
           event.user.mobileNumber,
           event.user.password,
         );

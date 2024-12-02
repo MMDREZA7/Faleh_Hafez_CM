@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
 
+              // ignore: use_build_context_synchronously
               await showDialog(
                 context: context,
                 builder: (context) => const QuickGuideDialog(
@@ -44,6 +45,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
 
+              // ignore: use_build_context_synchronously
               await showDialog(
                 context: context,
                 builder: (context) => const QuickGuideDialog(

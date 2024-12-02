@@ -1,4 +1,4 @@
-class UserChatItem {
+class UserChatItemDTO {
   final String id;
   final String participant1ID;
   final String participant1MobileNumber;
@@ -6,7 +6,7 @@ class UserChatItem {
   final String participant2MobileNumber;
   final String lastMessageTime;
 
-  UserChatItem({
+  UserChatItemDTO({
     required this.id,
     required this.participant1ID,
     required this.participant1MobileNumber,

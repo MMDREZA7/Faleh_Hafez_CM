@@ -10,7 +10,7 @@ final class ChatItemsLoading extends ChatItemsState {}
 final class ChatItemsEmpty extends ChatItemsState {}
 
 final class ChatItemsLoaded extends ChatItemsState {
-  final List<UserChatItem> userChatItems;
+  final List<UserChatItemDTO> userChatItems;
 
   ChatItemsLoaded({required this.userChatItems});
 }

@@ -49,12 +49,7 @@ class MyApp extends StatelessWidget {
 
           return MultiBlocProvider(
             providers: [
-              BlocProvider(
-                create: (context) => ChatThemeChangerBloc()
-                  ..add(
-                    FirstTimeOpenChat(),
-                  ),
-              ),
+              BlocProvider(create: (context) => ChatThemeChangerBloc()),
               BlocProvider(
                 create: (context) =>
                     ThemeChangerBloc()..add(FirstTimeToOpenApp()),
@@ -78,13 +73,17 @@ class MyApp extends StatelessWidget {
                   return MaterialApp(
                     debugShowCheckedModeBanner: false,
                     theme: ThemeData.dark(),
-                    home: HomePageChats(
-                      user: User(
-                        id: "77654420-0ba6-4c2f-df4b-08dd120a6889",
-                        mobileNumber: "09000000000",
-                        token:
-                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3NzY1NDQyMC0wYmE2LTRjMmYtZGY0Yi0wOGRkMTIwYTY4ODkiLCJ1bmlxdWVfbmFtZSI6IjA5MDAwMDAwMDAwIiwibmJmIjoxNzMzMDYyNTkyLCJleHAiOjE3MzMwNzAzOTIsImlhdCI6MTczMzA2MjU5MiwiaXNzIjoiWW91ckFQSSIsImF1ZCI6IllvdXJBUElVc2VycyJ9.3FZLM04644GyWFW81WPjqmMJxNBSPPOd8ZrGohg8WlI",
-                        type: 1,
+                    home: BlocProvider(
+                      create: (context) =>
+                          ChatThemeChangerBloc()..add(FirstTimeOpenChat()),
+                      child: HomePageChats(
+                        user: User(
+                          id: "77654420-0ba6-4c2f-df4b-08dd120a6889",
+                          mobileNumber: "09000000000",
+                          token:
+                              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwYzJjNjQ1My05OGEyLTQzNjAtZDU5MS0wOGRkMTFlM2Q3NzUiLCJ1bmlxdWVfbmFtZSI6IjA5MTAwNTU2MDkyIiwibmJmIjoxNzMzMTQxNjk3LCJleHAiOjE3MzMxNDk0OTcsImlhdCI6MTczMzE0MTY5NywiaXNzIjoiWW91ckFQSSIsImF1ZCI6IllvdXJBUElVc2VycyJ9.t1xUlfvSEZ_MVQQIw-WQr1bsH5FiM9dQbf8TYf2dqGU",
+                          type: 1,
+                        ),
                       ),
                     ),
                   );
